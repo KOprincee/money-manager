@@ -16,30 +16,26 @@ const AppReducer = (state, action) => {
         ),
       };
 
+    case "ADD_USER_DET":
+      return {
+        ...state,
+        name: action.payload.name,
+        id: action.payload.id,
+        token: action.payload.token,
+        budget: action.payload.budget,
+      };
+
     default:
       return state;
   }
 };
 
 const initialState = {
-  budget: 2000,
-  expenses: [
-    {
-      id: 1,
-      name: "Shopping",
-      cost: 50,
-    },
-    {
-      id: 2,
-      name: "Holiday",
-      cost: 350,
-    },
-    {
-      id: 3,
-      name: "Food",
-      cost: 150,
-    },
-  ],
+  name: "",
+  id: "",
+  token: "",
+  budget: 0,
+  expenses: [],
 };
 
 export const AppContext = createContext();
@@ -52,6 +48,9 @@ export const AppProvider = (props) => {
       value={{
         budget: state.budget,
         expenses: state.expenses,
+        id: state.id,
+        token: state.token,
+        name: state.name,
         dispatch,
       }}
     >

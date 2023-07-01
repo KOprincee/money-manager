@@ -1,0 +1,16 @@
+.btn-color {
+  background-color: #0e1c36;
+  color: #fff;
+}
+
+.btn-color:hover {
+  border: 1px solid black;
+}
+
+.cardbody-color {
+  background-color: #ebf2fa;
+}
+
+.warning-text {
+  color: red;
+}

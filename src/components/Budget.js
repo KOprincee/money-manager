@@ -6,6 +6,9 @@ const Budget = () => {
   return (
     <div className="alert alert-secondary">
       <span> Budget: {budget}</span>
+      <button type="submit" className="btn btn-primary btn-sm">
+        Edit
+      </button>
     </div>
   );
 };
