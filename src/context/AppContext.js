@@ -16,12 +16,9 @@ const AppReducer = (state, action) => {
         ),
       };
 
-    case "ADD_USER_DET":
+    case "ADD_BUDGET":
       return {
         ...state,
-        name: action.payload.name,
-        id: action.payload.id,
-        token: action.payload.token,
         budget: action.payload.budget,
       };
 
@@ -31,9 +28,6 @@ const AppReducer = (state, action) => {
 };
 
 const initialState = {
-  name: "",
-  id: "",
-  token: "",
   budget: 0,
   expenses: [],
 };
@@ -48,9 +42,6 @@ export const AppProvider = (props) => {
       value={{
         budget: state.budget,
         expenses: state.expenses,
-        id: state.id,
-        token: state.token,
-        name: state.name,
         dispatch,
       }}
     >

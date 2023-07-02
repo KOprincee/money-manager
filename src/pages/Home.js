@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { AppContext } from "../context/AppContext";
-import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
 import getCookie from "../context/getCookie";
 
 import axios from "axios";
@@ -13,12 +13,13 @@ import AddExpenseForm from "./../components/AddExpenseForm";
 
 const Home = () => {
   const { dispatch } = useContext(AppContext);
+  const navigate = useNavigate();
 
   const id = getCookie("id");
   const token = getCookie("token");
   const name = getCookie("name");
+
   useEffect(() => {
-    console.log("Check");
     if (id) {
       axios
         .get("http://localhost:3000/money-manager/expense/" + id, {
@@ -32,17 +33,23 @@ const Home = () => {
               type: "ADD_EXPENSE",
               payload: {
                 name: el.title,
-                id: uuidv4(),
+                id: el._id,
                 cost: el.amount,
               },
             })
           );
         })
         .catch((error) => {
-          console.error(error);
+          const message = error.response.data.message;
+          console.error(message);
+          if (message.includes("jwt expired")) {
+            document.cookie =
+              "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            navigate("/");
+          }
         });
     }
-  }, [id, token, dispatch]);
+  }, [id, token, dispatch, navigate]);
 
   return (
     <div className="container">
