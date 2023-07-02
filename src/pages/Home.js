@@ -42,7 +42,7 @@ const Home = () => {
           console.error(error);
         });
     }
-  }, []);
+  }, [id, token, dispatch]);
 
   return (
     <div className="container">
