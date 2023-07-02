@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import { v4 as uuidv4 } from "uuid";
+import getCookie from "../context/getCookie";
 
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,9 +12,13 @@ import ExpenseList from "./../components/ExpenseList";
 import AddExpenseForm from "./../components/AddExpenseForm";
 
 const Home = () => {
-  const { id, token, name, dispatch } = useContext(AppContext);
+  const { dispatch } = useContext(AppContext);
 
+  const id = getCookie("id");
+  const token = getCookie("token");
+  const name = getCookie("name");
   useEffect(() => {
+    console.log("Check");
     if (id) {
       axios
         .get("http://localhost:3000/money-manager/expense/" + id, {
@@ -37,7 +42,7 @@ const Home = () => {
           console.error(error);
         });
     }
-  }, [id, token, dispatch]);
+  }, []);
 
   return (
     <div className="container">

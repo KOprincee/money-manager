@@ -1,13 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { AppContext } from "../context/AppContext";
 import "./Login.css";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { dispatch } = useContext(AppContext);
   const [loginStatus, setLoginStatus] = useState(false);
   const LoginHandler = async (e) => {
     e.preventDefault();
@@ -18,24 +16,17 @@ const Login = () => {
         password: document.getElementById("password").value,
       })
       .then(function (response) {
-        localStorage.setItem("token", response.data.token);
-        dispatch({
-          type: "ADD_USER_DET",
-          payload: {
-            name: response.data.name,
-            id: response.data.id,
-            token: response.data.token,
-            budget: response.data.budget,
-          },
-        });
-        //navigate(`/${response.data.name}`);
+        document.cookie = `token= ${response.data.token}  `;
+        document.cookie = `id=${response.data.id}`;
+        document.cookie = `name=${response.data.name}`;
+        document.cookie = `budget=${response.data.budget}`;
+        navigate(`/${response.data.name}`);
       })
       .catch(function (error) {
         if (error.response.status === 401) {
           setLoginStatus(true);
         }
-      })
-      .finally(navigate("/:prince"));
+      });
   };
 
   return (

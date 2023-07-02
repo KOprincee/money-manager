@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import { AppContext } from "../context/AppContext";
+import React from "react";
+import getCookie from "../context/getCookie";
 
 const Budget = () => {
-  const { budget } = useContext(AppContext);
+  const budget = getCookie("budget");
   return (
     <div className="alert alert-secondary">
       <span> Budget: {budget}</span>
