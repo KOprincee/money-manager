@@ -7,12 +7,21 @@ import Modal from "../../Modals/Modal";
 const Expense = () => {
   const [showFormModal, setshowFormModal] = useState(false);
   const hideModal = () => {
+    setshowFormModal(false);
+  };
+
+  const showModal = () => {
     setshowFormModal(true);
   };
 
   return (
     <>
-      <h3 className="mt-3">Expenses</h3>
+      <h3 className="mt-3">
+        Expenses{" "}
+        <button className="btn btn-primary btn-sm" onClick={showModal}>
+          Add
+        </button>
+      </h3>
       <div className="row mt-3">
         <div className="col-sm">
           {" "}
@@ -23,7 +32,7 @@ const Expense = () => {
         <div className="col-sm">
           {showFormModal && (
             <Modal onClose={hideModal}>
-              <AddExpenseForm />
+              <AddExpenseForm onClose={hideModal} />
             </Modal>
           )}
         </div>

@@ -1,11 +1,19 @@
 import React, { useContext, useState } from "react";
 import { AppContext } from "../../context/AppContext";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
-const AddExpenseForm = () => {
+import getCookie from "../../context/getCookie";
+
+const AddExpenseForm = (props) => {
   const [name, setName] = useState();
   const [cost, setCost] = useState();
   const { dispatch } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  const id = getCookie("id");
+  const token = getCookie("token");
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -20,8 +28,31 @@ const AddExpenseForm = () => {
       payload: expense,
     });
 
-    setCost("");
-    setName("");
+    const data = { title: name, user_id: id, amount: cost };
+
+    axios
+      .post("http://localhost:3000/money-manager/expense", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(console.log("ok"))
+      .catch((error) => {
+        const message = error.response.data.message;
+        console.error(message);
+        if (message.includes("jwt expired")) {
+          document.cookie =
+            "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          navigate("/");
+        }
+        if (message.includes("not Logged")) {
+          document.cookie =
+            "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          navigate("/");
+        }
+      });
+
+    props.onClose();
   };
 
   return (
@@ -42,7 +73,8 @@ const AddExpenseForm = () => {
           <label htmlFor="cost">Cost</label>
           <input
             required
-            type="text"
+            type="number"
+            min={1}
             className="form-control"
             id="cost"
             value={cost}
