@@ -1,6 +1,7 @@
 import React, { useState, useRef, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+import Spinner from "../spinner/spinner";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
@@ -8,6 +9,7 @@ import "./Login.css";
 const Register = () => {
   const [formValidation, setFormValidation] = useState(false);
   const [formValidationError, setFormValidationError] = useState("");
+  const [showSpinner, setshowSpinner] = useState(false);
 
   const navigate = useNavigate();
   const { dispatch } = useContext(AppContext);
@@ -24,6 +26,7 @@ const Register = () => {
       setFormValidationError("Please enter password correctly twice");
     } else {
       setFormValidation(true);
+      setshowSpinner(true);
       axios
         .post("https://money-manager-server-gvda.onrender.com/users/signup", {
           name: document.getElementById("name").value,
@@ -40,10 +43,13 @@ const Register = () => {
             type: "RESET_EXPENSE",
           });
           navigate(`/${response.data.name}`);
+          setshowSpinner(false);
         })
         .catch(function (error) {
           const message = error.response.data.message;
           console.error(message);
+          setshowSpinner(false);
+          setshowSpinner(false);
           if (message.includes("Enter a valid email")) {
             setFormValidationError("Please provide a valid email address.");
             setFormValidation(false);
@@ -64,6 +70,7 @@ const Register = () => {
               className="card-body cardbody-color p-lg-5"
               onSubmit={submitHandler}
             >
+              {showSpinner && <Spinner />}
               <div className="text-center">
                 <h1 className="mb-5">Registration Form</h1>
               </div>

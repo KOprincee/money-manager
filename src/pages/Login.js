@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
+import Spinner from "../spinner/spinner";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
@@ -7,9 +9,18 @@ import "./Login.css";
 const Login = () => {
   const navigate = useNavigate();
   const [loginStatus, setLoginStatus] = useState(false);
+  const [showSpinner, setshowSpinner] = useState(false);
+
+  const { dispatch } = useContext(AppContext);
+  useEffect(() => {
+    dispatch({
+      type: "RESET_EXPENSE",
+    });
+  });
+
   const LoginHandler = async (e) => {
     e.preventDefault();
-
+    setshowSpinner(true);
     await axios
       .post("https://money-manager-server-gvda.onrender.com/users/login", {
         email: document.getElementById("email").value,
@@ -20,9 +31,11 @@ const Login = () => {
         document.cookie = `id=${response.data.id}`;
         document.cookie = `name=${response.data.name}`;
         document.cookie = `budget=${response.data.budget}`;
+        setshowSpinner(false);
         navigate(`/${response.data.name}`);
       })
       .catch(function (error) {
+        setshowSpinner(false);
         if (error.response.status === 401) {
           setLoginStatus(true);
         }
@@ -38,6 +51,7 @@ const Login = () => {
               className="card-body cardbody-color p-lg-5"
               onSubmit={LoginHandler}
             >
+              {showSpinner && <Spinner />}
               <div className="text-center">
                 <h1 className="mb-5">Money Manager</h1>
               </div>
