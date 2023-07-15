@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { AppContext } from "../context/AppContext";
+import { AppContext } from "../../context/AppContext";
 import { v4 as uuidv4 } from "uuid";
 
 const AddExpenseForm = () => {
@@ -26,7 +26,7 @@ const AddExpenseForm = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <div className="row">
+      <div className="row mb-3">
         <div className="col-sm">
           <label htmlFor="name">Name</label>
           <input

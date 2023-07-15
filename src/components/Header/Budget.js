@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
-import getCookie from "../context/getCookie";
-import { AppContext } from "../context/AppContext";
+import getCookie from "../../context/getCookie";
+import { AppContext } from "../../context/AppContext";
 
 const Budget = () => {
   const { dispatch } = useContext(AppContext);
