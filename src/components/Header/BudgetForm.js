@@ -1,14 +1,11 @@
-import React, { useContext, useState } from "react";
-import { AppContext } from "../../context/AppContext";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import getCookie from "../../context/getCookie";
 
-const AddExpenseForm = (props) => {
-  const [name, setName] = useState();
-  const [cost, setCost] = useState();
-  const { dispatch } = useContext(AppContext);
+const BudgetForm = (props) => {
+  const [budget, setBudget] = useState(0);
   const navigate = useNavigate();
 
   const id = getCookie("id");
@@ -17,26 +14,17 @@ const AddExpenseForm = (props) => {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    const data = { title: name, user_id: id, amount: cost };
+    const data = {
+      budget,
+    };
 
     axios
-      .post("http://localhost:3000/money-manager/expense", data, {
+      .patch("http://localhost:3000/money-manager/users/" + id, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(function (response) {
-        const expense = {
-          id: response.data.id,
-          name: name,
-          cost: parseInt(cost),
-        };
-
-        dispatch({
-          type: "ADD_EXPENSE",
-          payload: expense,
-        });
-      })
+      .then((document.cookie = `budget=${budget}`))
       .catch((error) => {
         const message = error.response.data.message;
         console.error(message);
@@ -59,34 +47,23 @@ const AddExpenseForm = (props) => {
     <form onSubmit={onSubmit}>
       <div className="row mb-3">
         <div className="col-sm">
-          <label htmlFor="name">Name</label>
-          <input
-            required
-            type="text"
-            className="form-control"
-            id="name"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          ></input>
-        </div>
-        <div className="col-sm">
           <label htmlFor="cost">Cost</label>
           <input
             required
             type="number"
             min={1}
             className="form-control"
-            id="cost"
-            value={cost}
-            onChange={(event) => setCost(event.target.value)}
+            id="budget"
+            value={budget}
+            onChange={(event) => setBudget(event.target.value)}
           ></input>
         </div>
       </div>
       <button type="submit" className="btn btn-primary">
-        Add
+        Change
       </button>
     </form>
   );
 };
 
-export default AddExpenseForm;
+export default BudgetForm;
