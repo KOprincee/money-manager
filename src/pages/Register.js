@@ -23,7 +23,7 @@ const Register = () => {
     } else {
       setFormValidation(true);
       axios
-        .post("http://localhost:3000/money-manager/users/signup", {
+        .post("https://money-manager-server-gvda.onrender.com/users/signup", {
           name: document.getElementById("name").value,
           email: email.current.value,
           password: password.current.value,

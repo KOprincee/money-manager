@@ -14,11 +14,14 @@ const ExpenseItem = (props) => {
 
   const deleteExpenseHandler = () => {
     axios
-      .delete("http://localhost:3000/money-manager/expense/" + props.id, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .delete(
+        "https://money-manager-server-gvda.onrender.com/expense/" + props.id,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then(function (response) {
         dispatch({
           type: "DELETE_EXPENSE",

@@ -19,7 +19,7 @@ const Home = () => {
   useEffect(() => {
     if (id) {
       axios
-        .get("http://localhost:3000/money-manager/expense/" + id, {
+        .get("https://money-manager-server-gvda.onrender.com/expense/" + id, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

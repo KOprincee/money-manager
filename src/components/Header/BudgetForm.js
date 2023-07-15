@@ -19,11 +19,15 @@ const BudgetForm = (props) => {
     };
 
     axios
-      .patch("http://localhost:3000/money-manager/users/" + id, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .patch(
+        "https://money-manager-server-gvda.onrender.com/users/" + id,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((document.cookie = `budget=${budget}`))
       .catch((error) => {
         const message = error.response.data.message;

@@ -11,7 +11,7 @@ const Login = () => {
     e.preventDefault();
 
     await axios
-      .post("http://localhost:3000/money-manager/users/login", {
+      .post("https://money-manager-server-gvda.onrender.com/users/login", {
         email: document.getElementById("email").value,
         password: document.getElementById("password").value,
       })

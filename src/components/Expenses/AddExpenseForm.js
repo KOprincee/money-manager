@@ -20,7 +20,7 @@ const AddExpenseForm = (props) => {
     const data = { title: name, user_id: id, amount: cost };
 
     axios
-      .post("http://localhost:3000/money-manager/expense", data, {
+      .post("https://money-manager-server-gvda.onrender.com/expense", data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
