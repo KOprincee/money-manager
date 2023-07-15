@@ -22,6 +22,12 @@ const AppReducer = (state, action) => {
         budget: action.payload.budget,
       };
 
+    case "RESET_EXPENSE":
+      return {
+        budget: 0,
+        expenses: [],
+      };
+
     default:
       return state;
   }

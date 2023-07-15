@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
@@ -9,6 +10,7 @@ const Register = () => {
   const [formValidationError, setFormValidationError] = useState("");
 
   const navigate = useNavigate();
+  const { dispatch } = useContext(AppContext);
 
   const email = useRef();
   const password = useRef();
@@ -34,6 +36,9 @@ const Register = () => {
           document.cookie = `id=${response.data.data.user._id}`;
           document.cookie = `name=${response.data.data.user.name}`;
           document.cookie = `budget=0`;
+          dispatch({
+            type: "RESET_EXPENSE",
+          });
           navigate(`/${response.data.name}`);
         })
         .catch(function (error) {
