@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import getCookie from "../../context/getCookie";
 import { AppContext } from "../../context/AppContext";
-import Modal from "../../Modals/Modal";
+import Modal from "../../modals/Modal";
 import BudgetForm from "./BudgetForm";
 
 const Budget = () => {

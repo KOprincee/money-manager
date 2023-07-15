@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import ExpenseList from "./ExpenseList";
 import AddExpenseForm from "./AddExpenseForm";
-import Modal from "../../Modals/Modal";
+import Modal from "../../modals/Modal";
 
 const Expense = () => {
   const [showFormModal, setshowFormModal] = useState(false);
