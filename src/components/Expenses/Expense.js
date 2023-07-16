@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import ExpenseList from "./ExpenseList";
 import AddExpenseForm from "./AddExpenseForm";
 import Modal from "../../modals/Modal";
